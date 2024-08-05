@@ -17,9 +17,11 @@ As seguintes versões foram utilizadas neste projeto:
 npm init # inicia o projeto de node
 ```
 
-2. Responda os items da forma que desejar. Ps. Você poderá alterá-lo depois. Na opção "entry point:", recomendo colocar o "src/index.ts".
+2. Responda os itens da forma que desejar. Ps. Você poderá alterá-lo depois.
 
-3. Será criado uma arquivo package.json na raíz do seu diretório. Exemplo do resultado:
+Na opção "entry point:", recomendo colocar o "src/index.ts".
+
+Será criado uma arquivo package.json na raiz do seu diretório. Exemplo do resultado:
 ```json
 {
   "name": "tsbackend",
@@ -34,7 +36,7 @@ npm init # inicia o projeto de node
 }
 ```
 
-4. Instale as depências necessárias ao typescript executando o comando abaixo no terminal:
+4. Instale as dependências necessárias ao typescript executando o comando abaixo no terminal:
 
 ```bash
 npm i typescript @types/node ts-node --save-dev 
@@ -70,7 +72,7 @@ npm install --save-dev ts-node-dev
 
 ## Configurações
 
-### No arquivo tsconfig.json (se econtra na raíz do projeto)
+### No arquivo tsconfig.json (se encontra na raíz do projeto)
 
 1. Descomente a linha '"rootDir": "./",' (remova os '//' antes da linha) ;
 
@@ -96,7 +98,7 @@ Resultado final:
 } 
 ```
 
-### No arquivo packge.json
+### No arquivo package.json
 
 1. Dentro das chaves de scripts adicionar a linha start:
 
@@ -108,7 +110,7 @@ Resultado final:
   },
 ```
 
-### Debbuger
+### Debugger
 
 1. Rode o script de build para criar os arquivos de produção (o debugger precisa dele para rodar):
 
@@ -151,7 +153,7 @@ npx tsc
 }
 ```
 
-4. Variavel de ambiente
+4. Variável de ambiente
 
 ```bash
 node --env-file=.env index.js
