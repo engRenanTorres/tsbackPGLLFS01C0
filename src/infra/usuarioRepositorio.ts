@@ -2,10 +2,12 @@ import path from 'path';
 import fs from 'fs';
 import DBSchema from './dbSchema';
 import { UsarioSchema } from './usuarioSchema';
+import { CriarUsuarioDTO } from '../usuarioDTO';
+import { UsuarioModel } from '../entidades/usuarios';
 
 // SQLite
 
-class UsarioRepositorio {
+class UsuarioRepositorio {
   private readonly caminhoArquivo: string;
 
   constructor () {
@@ -37,11 +39,21 @@ class UsarioRepositorio {
     return usuario;
   }
 
-  public criar (usario: UsarioSchema) {
+  public criar (usario: CriarUsuarioDTO) {
     const bd = this.acessoBD();
-    bd.users.push(usario);
+
+    const usarioMaiorId = bd.users.reduce(
+      (max, usario) => usario.id > max.id ? usario : max, bd.users[0]
+    );
+
+    const novoUsuario = new UsuarioModel(
+      usarioMaiorId.id + 1,
+      usario.nome,
+      usario.ativo
+    );
+    bd.users.push(novoUsuario);
     this.reescreverArquivo(bd);
   }
 }
 
-export default UsarioRepositorio;
+export default UsuarioRepositorio;
