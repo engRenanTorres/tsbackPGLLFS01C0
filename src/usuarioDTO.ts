@@ -1,27 +1,6 @@
-export class CriarUsuarioDTO {
-  get nome (): string {
-    return this.nome;
-  }
+/* eslint-disable no-unused-vars */
+import { UsuarioModel } from './entidades/usuarios';
 
-  set nome (nome: string) {
-    this.nome = nome;
-  }
+export type CriarUsuarioDTO = Omit<UsuarioModel, 'id' >
 
-  get ativo (): boolean {
-    return this.ativo;
-  }
-
-  set ativo (ativo: boolean) {
-    this.ativo = ativo;
-  }
-}
-
-export class ViewUsuarioDTO {
-  get nome (): string {
-    return this.nome;
-  }
-
-  set nome (nome: string) {
-    this.nome = nome;
-  }
-}
+export type AtualizarUsuarioDTO = Partial<CriarUsuarioDTO>
