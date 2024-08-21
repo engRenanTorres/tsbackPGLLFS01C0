@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import DBSchema from './dbSchema';
 import { UsarioSchema as UsuarioSchema } from './usuarioSchema';
-import { AtualizarUsuarioDTO, CriarUsuarioDTO } from '../usuarioDTO';
+import { AtualizarUsuarioDTO, CriarUsuarioDTO } from '../usuario-dto';
 import { UsuarioModel } from '../entidades/usuarios';
 
 class UsuarioRepositorio {

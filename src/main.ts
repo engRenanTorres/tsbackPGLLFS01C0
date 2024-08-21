@@ -2,17 +2,18 @@
 // CRUD - Create Read(Ler) Update Delete
 import express, { NextFunction, Request, Response } from 'express';
 import routes from './routes';
+import Logger from './logger';
+import AuthService from './auth-service';
+import ErrorHandler from './error-handler';
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const dateTime = new Date().toISOString();
-  console.log(`${dateTime} Método: ${req.method}, URL: ${req.url}`);
-  next();
-});
+app.use(Logger.init());
+app.use(AuthService.protect());
 app.use('/api', routes);
+app.use(ErrorHandler.init());
 
 // GET - Leitura / Post - Escreve, Criar / PUT - Atualizar / DELETE - Delete
 app.get('/', (req: Request, res: Response) => {

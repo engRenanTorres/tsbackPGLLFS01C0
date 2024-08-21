@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
 import UsuarioRepositorio from './infra/usuarioRepositorio';
-import { AtualizarUsuarioDTO, CriarUsuarioDTO } from './usuarioDTO';
+import { AtualizarUsuarioDTO, CriarUsuarioDTO } from './usuario-dto';
 import { body, param, validationResult } from 'express-validator';
+import NotFountException from './exceptions/not-fount-exception';
 
 class UsuarioController {
   private readonly usuarioRepositorio: UsuarioRepositorio;
@@ -38,7 +39,6 @@ class UsuarioController {
     res.json(usarios);
   }
 
-  // http://localhost:3000/usuario?id=2
   buscarPorId (req: Request, res: Response) {
     const errosValidacao = validationResult(req);
 
@@ -47,8 +47,11 @@ class UsuarioController {
     }
 
     const id = req.params.id ?? 1;
-    const usarios = this.usuarioRepositorio.buscaPorId(+id);
-    res.json(usarios);
+    const usario = this.usuarioRepositorio.buscaPorId(+id);
+    if (!usario) {
+      throw new NotFountException('Usuario não encontrado.');
+    }
+    res.json(usario);
   }
 
   criar (req: Request, res: Response) {
