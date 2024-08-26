@@ -34,6 +34,32 @@ class UsuarioController {
     this.router.delete('/:id', this.deletar.bind(this));
   }
 
+   /**
+     * @swagger
+     * /usuarios:
+     *   get:
+     *     summary: Retorna todos os usuários + qualquer informação extra
+     *     tags:
+     *       - usuarios
+     *     responses:
+     *       200:
+     *         description: Lista de usuários
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 type: object
+     *                 properties:
+     *                   id:
+     *                     type: string
+     *                     example: 1
+     *                   nome:
+     *                     type: string
+     *                     example: João da Silva
+     *       401:
+     *         description: Não autorizado
+     */
   buscarTodos (req: Request, res: Response) {
     const usarios = this.usuarioRepositorio.buscaTodos();
     res.json(usarios);
