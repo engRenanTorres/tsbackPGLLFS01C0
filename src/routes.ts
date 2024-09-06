@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import UsuarioController from './usuario-controller';
-import UsuarioRepositorio from './infra/usuarioRepositorio';
+import UsuarioController from './4api/controllers/usuario-controller';
+import container from './3infra/inversify-config';
 
 const routes = Router();
 
-const usuarioRepositorio = new UsuarioRepositorio();
-const usuarioController = new UsuarioController(usuarioRepositorio);
+
+const usuarioController = container.get<UsuarioController>('UsuarioController');
 
 routes.use('/usuarios', usuarioController.router);
 

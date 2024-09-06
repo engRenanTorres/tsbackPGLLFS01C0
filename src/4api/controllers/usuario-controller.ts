@@ -1,14 +1,17 @@
 import { Router, Request, Response } from 'express';
-import UsuarioRepositorio from './infra/usuarioRepositorio';
-import { AtualizarUsuarioDTO, CriarUsuarioDTO } from './usuario-dto';
+import UsuarioRepositorio from '../../3infra/repositorios/usuario-repositorio';
+import { AtualizarUsuarioDTO, CriarUsuarioDTO } from '../../2dominio/dtos/usuario-dto';
 import { body, param, validationResult } from 'express-validator';
-import NotFountException from './exceptions/not-fount-exception';
+import UsuarioRepositorioInterface from '../../2dominio/interfaces/usuario-interface-repository';
+import { inject, injectable } from 'inversify';
 
+@injectable()
 class UsuarioController {
-  private readonly usuarioRepositorio: UsuarioRepositorio;
+  private readonly usuarioRepositorio: UsuarioRepositorioInterface;
   public readonly router: Router = Router();
 
-  constructor (usuarioRepositorio: UsuarioRepositorio) {
+  constructor (@inject('UsuarioRepositorio') usuarioRepositorio: UsuarioRepositorioInterface,
+  ) {
     this.usuarioRepositorio = usuarioRepositorio;
     this.routes();
   }
@@ -59,6 +62,8 @@ class UsuarioController {
      *                     example: João da Silva
      *       401:
      *         description: Não autorizado
+     *       500:
+     *         description: Erro Interno
      */
   buscarTodos (req: Request, res: Response) {
     const usarios = this.usuarioRepositorio.buscaTodos();
@@ -73,11 +78,8 @@ class UsuarioController {
     }
 
     const id = req.params.id ?? 1;
-    const usario = this.usuarioRepositorio.buscaPorId(+id);
-    if (!usario) {
-      throw new NotFountException('Usuario não encontrado.');
-    }
-    res.json(usario);
+    const usuario = this.usuarioRepositorio.buscaPorId(+id);
+    res.json(usuario);
   }
 
   criar (req: Request, res: Response) {

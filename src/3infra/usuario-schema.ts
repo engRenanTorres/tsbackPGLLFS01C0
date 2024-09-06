@@ -1,4 +1,4 @@
-export type UsarioSchema = {
+export type UsuarioSchema = {
     id: number;
     nome: string;
     ativo: boolean,

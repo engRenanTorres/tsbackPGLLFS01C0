@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
-// CRUD - Create Read(Ler) Update Delete
-import express, { NextFunction, Request, Response } from 'express';
+import express, {  Request, Response } from 'express';
 import routes from './routes';
-import Logger from './logger';
-import AuthService from './auth-service';
-import ErrorHandler from './error-handler';
+import Logger from './3infra/middlewares/logger';
+import ErrorHandler from './3infra/middlewares/error-handler';
 import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerConfig from './infra/swagger-options';
+import swaggerConfig from './3infra/swagger-options';
 import swaggerUi from 'swagger-ui-express';
+import AuthService from './2dominio/servicos/auth-service';
 
 const app = express();
 const port = 3000;
@@ -21,8 +19,6 @@ app.use(AuthService.protect());
 app.use('/api', routes);
 app.use(ErrorHandler.init());
 
-
-// GET - Leitura / Post - Escreve, Criar / PUT - Atualizar / DELETE - Delete
 app.get('/', (req: Request, res: Response) => {
   res.json('Bem vindo. Esta é a sua primeira API');
 });
@@ -30,3 +26,5 @@ app.get('/', (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`Servidor rodando na porta: http://localhost:${port}`);
 });
+
+

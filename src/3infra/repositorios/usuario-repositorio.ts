@@ -1,10 +1,13 @@
 import path from 'path';
 import fs from 'fs';
-import DBSchema from './dbSchema';
-import { UsarioSchema as UsuarioSchema } from './usuarioSchema';
-import { AtualizarUsuarioDTO, CriarUsuarioDTO } from '../usuario-dto';
-import { UsuarioModel } from '../entidades/usuarios';
+import DBSchema from '../db-schema';
+import { UsuarioSchema as UsuarioSchema } from '../usuario-schema';
+import { AtualizarUsuarioDTO, CriarUsuarioDTO } from '../../2dominio/dtos/usuario-dto';
+import { UsuarioModel } from '../../1entidades/usuarios';
+import { injectable } from 'inversify';
+import "reflect-metadata";
 
+@injectable()
 class UsuarioRepositorio {
   private readonly caminhoArquivo: string;
 
