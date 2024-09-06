@@ -202,6 +202,100 @@ Adiciona um script para o lint:
 }
 ```
 
+### Configurar os testes (jest)
+
+1. Instale as dependências do Jest como dev
+
+```bash
+npm install --save-dev jest ts-jest @types/jest
+```
+
+2. Crie um arquivo jest.config.ts e insira a seguinte configuração:
+
+```ts
+export default {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
+  moduleFileExtensions: ['ts', 'js'],
+  transform: {
+    '^.+\\.ts$': 'ts-jest'
+  },
+  verbose: true
+};
+```
+
+3. Descomente  "types": [], altere para   "types": ["node","jest"] e adicine as linhas abaixo fora das chaves do "compilersOptions":
+
+"include": ["src/**/*.ts", "src/**/*.js"],
+"exclude": ["node_modules", "**/*.test.ts"]
 
 
+Resultado final:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es2020", 
+    "module": "commonjs",   
+    "rootDir": "./src",
+    "types": ["node","jest"], 
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true 
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+} 
+```
+
+4. Crie/ou altere o script para test no package.json para rodar o jest:
+
+
+```json
+{
+    "scripts": {
+        //... demais scripts...
+        "lint": "eslint ./src/**/*.ts --fix",
+        "test": "jest"
+    }
+}
+```
+
+5. (Opcional para quem usa o eslint) Inclua o jest na configuração do .eslint.json:
+Comando a adicionar:
+"include": ["src/**/*.ts", "src/**/*.test.ts", "src/**/__tests__/**/*.ts"],
+
+```json
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "include": ["src/**/*.ts", "src/**/*.test.ts", "src/**/__tests__/**/*.ts"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 15,
+        "sourceType": "module",
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/semi": "off",
+        "semi": [2,"always"]
+        
+    }
+}
+```
 
